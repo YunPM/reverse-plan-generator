@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>역기획서 생성기</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <span class="logo-icon">📋</span>
+          <span class="logo-text">역기획서 생성기</span>
+        </div>
+        <p class="header-desc">URL을 입력하면 AI가 역기획서를 자동으로 생성합니다</p>
+      </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main">
+      <!-- 입력 섹션 -->
+      <section class="input-section card">
+        <h2 class="section-title">분석할 웹사이트 URL 입력</h2>
+
+        <div class="input-group">
+          <input
+            id="urlInput"
+            type="text"
+            class="url-input"
+            placeholder="https://example.com"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
+          <button id="analyzeBtn" class="analyze-btn" onclick="startAnalysis()">
+            <span class="btn-text">역기획서 생성</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+
+        <!-- 예시 URL -->
+        <div class="examples">
+          <span class="examples-label">예시:</span>
+          <button class="example-chip" onclick="setExample('https://www.notion.so')">Notion</button>
+          <button class="example-chip" onclick="setExample('https://www.figma.com')">Figma</button>
+          <button class="example-chip" onclick="setExample('https://linear.app')">Linear</button>
+          <button class="example-chip" onclick="setExample('https://www.miro.com')">Miro</button>
+          <button class="example-chip" onclick="setExample('https://slack.com')">Slack</button>
+        </div>
+      </section>
+
+      <!-- 로딩 -->
+      <section id="loadingSection" class="loading-section hidden">
+        <div class="loading-card card">
+          <div class="spinner"></div>
+          <div class="loading-text">
+            <p id="loadingStatus" class="loading-status">크롤링 중...</p>
+            <p class="loading-hint">AI가 페이지를 분석하고 있습니다. 30초~1분 정도 소요됩니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 에러 -->
+      <section id="errorSection" class="error-section hidden">
+        <div class="error-card card">
+          <span class="error-icon">⚠️</span>
+          <div>
+            <p id="errorTitle" class="error-title"></p>
+            <p id="errorMessage" class="error-message"></p>
+          </div>
+          <button class="retry-btn" onclick="hideError()">닫기</button>
+        </div>
+      </section>
+
+      <!-- 결과 섹션 -->
+      <section id="resultSection" class="result-section hidden">
+        <div class="result-header card">
+          <div class="result-meta">
+            <span class="result-icon">✅</span>
+            <div>
+              <p class="result-title">역기획서 생성 완료</p>
+              <p id="resultUrl" class="result-url"></p>
+            </div>
+            <span id="screenshotBadge" class="badge hidden">📸 스크린샷 포함</span>
+          </div>
+          <div class="result-actions">
+            <button class="action-btn" onclick="copyMarkdown()" title="마크다운 복사">
+              📋 복사
+            </button>
+            <button class="action-btn" onclick="downloadMarkdown()" title="마크다운 다운로드">
+              ⬇️ 다운로드
+            </button>
+            <button class="action-btn action-btn--outline" onclick="collapseAll()" title="모두 접기">
+              ⬆ 모두 접기
+            </button>
+            <button class="action-btn action-btn--outline" onclick="expandAll()" title="모두 펼치기">
+              ⬇ 모두 펼치기
+            </button>
+          </div>
+        </div>
+
+        <!-- 탭 -->
+        <div class="tabs card">
+          <button class="tab-btn active" onclick="switchTab('doc')">📄 역기획서</button>
+          <button class="tab-btn" onclick="switchTab('wireframe')">🎨 와이어프레임</button>
+        </div>
+
+        <!-- 역기획서 탭 -->
+        <div id="tabDoc" class="tab-content">
+          <div id="markdownOutput" class="markdown-output card"></div>
+        </div>
+
+        <!-- 와이어프레임 탭 -->
+        <div id="tabWireframe" class="tab-content hidden">
+          <div class="card wireframe-card">
+            <div id="wireframeLoading" class="wireframe-loading hidden">
+              <div class="spinner"></div>
+              <span>와이어프레임 생성 중...</span>
+            </div>
+            <iframe id="wireframeFrame" class="wireframe-frame hidden" sandbox="allow-same-origin"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Powered by Claude AI · 바이브코딩 해커톤 2026</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
