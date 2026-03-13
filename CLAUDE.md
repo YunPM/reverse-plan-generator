@@ -1,10 +1,10 @@
-# choiji-guide-big
+# reverse-plan-generator
 
-Claude Code 설정 예제 + 개발 프로세스 템플릿 프로젝트입니다.
+URL을 입력하면 AI가 역기획서를 자동 생성하는 웹 서비스입니다.
 
 ## 저장소
 
-- **원격 저장소**: [https://github.com/frogy95/choiji-guide-big.git](https://github.com/frogy95/choiji-guide-big.git)
+- **원격 저장소**: [https://github.com/YunPM/reverse-plan-generator.git](https://github.com/YunPM/reverse-plan-generator.git)
 
 ## 언어 및 커뮤니케이션 규칙
 
