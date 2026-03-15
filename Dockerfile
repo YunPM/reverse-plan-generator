@@ -33,9 +33,6 @@ WORKDIR /app
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Playwright Chromium 설치
-RUN playwright install chromium && playwright install-deps chromium
-
 # 소스 코드 복사
 COPY backend/ ./backend/
 COPY frontend/ ./frontend/
