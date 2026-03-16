@@ -92,4 +92,8 @@ curl -X POST http://localhost:8000/api/analyze \
 - **Playwright fallback**: 스크린샷 실패 시 텍스트 전용 분석으로 자동 전환
 - **URL 정규화**: http/https 접두사 없어도 자동 추가
 - **마크다운 섹션 분리**: h2 기준으로 섹션화하여 접기/펼치기 지원
-- **모델**: claude-sonnet-4-6 (최신 모델)
+- **모델**: gemini-flash-latest (Google Gemini, REST API 직접 호출)
+
+## 검증 보고서
+
+- 코드 리뷰 및 검증 기록: [`docs/deploy-history/2026-03-13.md`](../deploy-history/2026-03-13.md)
