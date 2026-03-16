@@ -3,6 +3,26 @@
 ## 개요
 바이브코딩 해커톤(2026-03-13)용 역기획서 자동 생성 서비스 MVP 구현
 
+## 개발 과정 — 문제 발생 및 해결 기록
+
+### 문제 1: Playwright 스크린샷 Docker 빌드 실패
+- **발생**: Dockerfile에서 `playwright install chromium` 실행 시 `playwright: not found` 오류
+- **원인 분석**: requirements.txt에 playwright 미포함 → CLI 없이 명령 실행 시도
+- **해결**: 실제 코드에서 Playwright 미사용 확인 → Dockerfile 설치 명령 제거 (Hotfix)
+- **교훈**: 배포 전 Docker 빌드 로컬 검증 필수
+
+### 문제 2: 환경변수 키 이름 불일치
+- **발생**: render.yaml에 `ANTHROPIC_API_KEY`로 선언, 실제 코드는 `GEMINI_API_KEY` 사용
+- **원인 분석**: AI 모델 Claude → Gemini 변경 시 render.yaml 업데이트 누락
+- **해결**: render.yaml 환경변수 키를 `GEMINI_API_KEY`로 수정
+- **교훈**: 의존성 변경 시 설정 파일 전체 점검 필요
+
+### 문제 3: 일부 사이트 크롤링 실패 (403)
+- **발생**: 특정 사이트 접근 시 403 Forbidden 응답
+- **원인 분석**: 봇 차단 정책 (User-Agent, IP 필터링)
+- **해결**: 에러 유형별 사용자 친화적 메시지 표시 (`friendlyError` 함수)
+- **현재 한계**: 크롤링 차단 사이트는 분석 불가 (Out of Scope로 정의)
+
 ## 구현 완료 항목
 
 - ✅ Task 1: 프로젝트 뼈대 (FastAPI + 정적 프론트엔드 서빙, /api/health)
