@@ -1,4 +1,4 @@
-# PRD to ROADMAP 메모리
+# PRD to ROADMAP 메모리 인덱스
 
-이 파일은 prd-to-roadmap 에이전트의 영구 메모리입니다.
-PRD 분석 패턴, 로드맵 생성 이력 등을 기록합니다.
+## 프로젝트 이력
+- [project_reverse_prd.md](project_reverse_prd.md) - 역기획서 생성기 프로젝트 로드맵 생성 이력 및 주요 기술 결정사항
