@@ -5,12 +5,35 @@
 
 ## 구현 완료 항목
 
-- ✅ Sprint 1: 프로젝트 뼈대 (FastAPI + 정적 프론트엔드 서빙, /api/health)
-- ✅ Sprint 2: URL 크롤링 (httpx + BeautifulSoup, Playwright 스크린샷 + fallback)
-- ✅ Sprint 3: Claude API 분석 연동 (멀티모달, claude-sonnet-4-6)
-- ✅ Sprint 4: 프론트엔드 E2E 플로우 (URL 입력 → 로딩 → 결과 렌더링)
-- ✅ Sprint 5: UX 개선 (복사/다운로드, 섹션 접기/펼치기, 예시 URL)
-- ✅ Sprint 6: Dockerfile + render.yaml 배포 설정
+- ✅ Task 1: 프로젝트 뼈대 (FastAPI + 정적 프론트엔드 서빙, /api/health)
+- ✅ Task 2: URL 크롤링 (httpx + BeautifulSoup, PageSpeed API 스크린샷 + fallback)
+- ✅ Task 3: Gemini API 분석 연동 (gemini-2.0-flash, REST 직접 호출)
+- ✅ Task 4: 프론트엔드 E2E 플로우 (URL 입력 → 로딩 → 결과 렌더링)
+- ✅ Task 5: UX 개선 (복사/다운로드, 섹션 접기/펼치기, 예시 URL)
+- ✅ Task 6: Dockerfile + render.yaml 배포 설정
+
+## 주요 기술 의사결정
+
+### 1. AI 모델: Claude → Gemini 변경
+- **초기 계획**: Anthropic Claude API 사용
+- **변경 이유**: Google Gemini API는 무료 티어 제공, SDK 없이 REST 직접 호출 가능, 해커톤 환경에서 의존성 최소화
+- **결과**: `gemini-2.0-flash-latest` 모델로 평균 50초 이내 역기획서 생성 달성
+
+### 2. 스크린샷: Playwright → Google PageSpeed API 변경
+- **초기 계획**: Playwright로 실제 브라우저 스크린샷 캡처
+- **문제 발생**: Docker 이미지에서 `playwright install chromium` 실행 시 패키지 없음 오류 → 빌드 실패
+- **변경 이유**: PageSpeed Insights API는 별도 브라우저 설치 불필요, API 키도 불필요, 안정적
+- **결과**: Hotfix로 Dockerfile playwright 명령 제거, PageSpeed API로 정상 스크린샷 제공
+
+### 3. 프론트엔드: Vanilla JS 선택
+- **결정**: React/Vue 대신 순수 HTML+CSS+JS
+- **이유**: 해커톤 시간 제약 + 빌드 도구 불필요 + marked.js CDN으로 마크다운 렌더링 충분
+- **트레이드오프**: 확장성 낮으나 빠른 개발 속도 확보
+
+### 4. 배포: Render 무료 티어 선택
+- **이유**: GitHub 연동 자동 배포, Docker 지원, 무료 플랜 가능
+- **제약**: 콜드 스타트 15~30초, 월 750시간 제한
+- **대응**: 첫 요청 시 "서버 준비 중" 안내 메시지 표시
 
 ## 파일 구조
 
